@@ -1,9 +1,5 @@
 ﻿public class InsertionSort : Sort
 {
-    public InsertionSort(int[] nums) : base(nums)
-    {
-    }
-
     public override void ToSort()
     {
         for (int i = 0; i < Nums.Length-1; i++)

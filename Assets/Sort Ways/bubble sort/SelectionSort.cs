@@ -1,10 +1,5 @@
 ﻿public class SelectionSort : Sort
 {
-    public SelectionSort(int[] nums) : base(nums)
-    {
-        
-    }
-
     public override void ToSort()
     {
         for (int i = 0; i < Nums.Length-1; i++)

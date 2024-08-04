@@ -17,9 +17,4 @@ public class BubbleSort : Sort
             }
         }
     }
-
-    public BubbleSort(int[] nums) : base(nums)
-    {
-        
-    }
 }

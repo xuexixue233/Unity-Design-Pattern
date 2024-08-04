@@ -1,9 +1,7 @@
-﻿public class ShellSort : Sort
-{
-    public ShellSort(int[] nums) : base(nums)
-    {
-    }
+﻿using UnityEngine;
 
+public class ShellSort : Sort
+{
     public override void ToSort()
     {
         int gap = Nums.Length;
