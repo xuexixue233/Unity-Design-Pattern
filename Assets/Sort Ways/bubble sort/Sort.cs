@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public abstract class Sort : ISort
@@ -8,10 +10,10 @@ public abstract class Sort : ISort
 
     public float needTime;
 
-    public void SortTime()
+    public async UniTask SortTime()
     {
         var curTime = Time.realtimeSinceStartup;
-        ToSort();
+        await Task.Run(ToSort);
         needTime = Time.realtimeSinceStartup - curTime;
     }
 

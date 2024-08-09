@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,7 +24,10 @@ public class GameMain : MonoBehaviour
         Type baseType = typeof(Sort);
         derivedTypes = GetDerivedTypes(baseType, Assembly.GetExecutingAssembly());
         sortButton.onClick.RemoveAllListeners();
-        sortButton.onClick.AddListener(Output);
+        sortButton.onClick.AddListener((() =>
+        {
+            Output().Forget();
+        }));
     }
     
     IEnumerable<Type> GetDerivedTypes(Type baseType, Assembly assembly)
@@ -30,7 +35,7 @@ public class GameMain : MonoBehaviour
         return assembly.GetTypes().Where(type => type.IsSubclassOf(baseType));
     }
 
-    private void Output()
+    private async UniTask Output()
     {
         var numsLength = long.Parse(inputField.text);
         for (long i = 0; i < numsLength; i++)
@@ -45,40 +50,9 @@ public class GameMain : MonoBehaviour
         {
             Sort instance = (Sort)Activator.CreateInstance(derivedType);
             instance.SetNum(nums.ToArray());
-            instance.SortTime();
+            await instance.SortTime();
             tmpText.text += $"{derivedType.Name}————{instance.needTime}\n";
         }
         
-        // var bubble = new BubbleSort(nums.ToArray());
-        // bubble.SortTime();
-        // tmpText.text += $"BubbleSort————{bubble.needTime}\n";
-        //
-        // var selection = new SelectionSort(nums.ToArray());
-        // selection.SortTime();
-        // tmpText.text += $"SelectionSort————{selection.needTime}\n";
-        //
-        // var insertion = new InsertionSort(nums.ToArray());
-        // insertion.SortTime();
-        // tmpText.text += $"InsertionSort————{insertion.needTime}\n";
-        //
-        // var radix = new RadixSort(nums.ToArray());
-        // radix.SortTime();
-        // tmpText.text += $"RadixSort———{radix.needTime}\n";
-        //
-        // var heap = new HeapSort(nums.ToArray());
-        // heap.SortTime();
-        // tmpText.text += $"HeapSort————{heap.needTime}\n";
-        //
-        // var quick = new QuickSort(nums.ToArray());
-        // quick.SortTime();
-        // tmpText.text += $"QuickSort————{quick.needTime}\n";
-        //
-        // var merge = new MergeSort(nums.ToArray());
-        // merge.SortTime();
-        // tmpText.text += $"MergeSort————{merge.needTime}\n";
-        //
-        // var shell = new ShellSort(nums.ToArray());
-        // shell.SortTime();
-        // tmpText.text += $"ShellSort————{shell.needTime}\n";
     }
 }
